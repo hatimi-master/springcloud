@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: eureka-server
+
+# ===================== 第一个 Eureka：端口 8888 =====================
+---
+spring:
+  profiles: peer1   # 环境1
+server:
+  port: 8888
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:9999/eureka/  # 注册到9999
+
+# ===================== 第二个 Eureka：端口 9999 =====================
+---
+spring:
+  profiles: peer2   # 环境2
+server:
+  port: 9999
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8888/eureka/  # 注册到8888
