@@ -1,0 +1,36 @@
+server:
+  port: 8222
+spring:
+  application:
+    name: shopping-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: shopping-user
+          uri: lb://shopping-user
+          predicates:
+            - Path=/shopping-user/**
+          filters:
+            - StripPrefix=1
+        - id: shopping-web
+          uri: lb://shopping-web
+          predicates:
+            - Path=/shopping-web/**
+          filters:
+            - StripPrefix=1
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8888/eureka
+  instance:
+    prefer-ip-address: true
+
+springdoc:
+  swagger-ui:
+    urls:
+      - name: shopping-user
+        url: /shopping-user/v3/api-docs
+      - name: shopping-web
+        url: /shopping-web/v3/api-docs
